@@ -1,0 +1,13 @@
+{
+  "name": "bt-synox-web",
+  "displayname": "SynoX Web",
+  "description": "Search files via SynoX Web",
+  "version": "1.0",
+  "site": "https://github.com/demorfi/synology-synox-web-plugins",
+  "accountsupport": true,
+  "module": "SynoDLMSearchSynoxWeb.php",
+  "type": "search",
+  "class": "SynoDLMSearchSynoxWeb",
+  "url": "",
+  "debug": false
+}

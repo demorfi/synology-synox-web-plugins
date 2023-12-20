@@ -1,0 +1,12 @@
+{
+  "name": "au-synox-web",
+  "displayname": "SynoX Web",
+  "description": "Search text via SynoX Web",
+  "version": "1.0",
+  "site": "https://github.com/demorfi/synology-synox-web-plugins",
+  "module": "SynoASSearchSynoxWeb.php",
+  "type": "lyric",
+  "class": "SynoASSearchSynoxWeb",
+  "url": "",
+  "debug": false
+}

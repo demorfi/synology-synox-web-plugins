@@ -1,0 +1,23 @@
+#!/bin/sh
+
+echo $'##################################################################
+# Synology SynoX Web Test Console.                               #
+#                                                                #
+# @author  demorfi <demorfi@gmail.com>                           #
+# @version 1.0                                                   #
+# @uses    https://github.com/demorfi/synox-web                  #
+# @source  https://github.com/demorfi/synology-synox-web-plugins #
+# @license http://www.opensource.org/licenses/mit-license.php    #
+##################################################################
+';
+
+DIR_PATH=$(dirname $(readlink -f "$0"))
+
+exec_php()
+{
+  PHP=`which php`
+  $PHP "$@"
+}
+
+exec_php "$DIR_PATH/tests.php" "$@"
+exit 0

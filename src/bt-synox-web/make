@@ -1,0 +1,61 @@
+#!/bin/sh
+. ../../functions
+
+DIR_PATH=$(dirname $(readlink -f "$0"))
+BUILD_DIR=build
+SOURCE="INFO SynoDLMSearchSynoxWeb.php"
+PKG_NAME="synox-web.dlm"
+PACKAGE=${DIR_PATH##*/}
+ENV_FILE=".env"
+TEMP_FILES="$ENV_FILE debug.log $PKG_NAME"
+
+build()
+{
+  echo "build $PACKAGE..."
+  if [ ! -d $BUILD_DIR ]; then
+    mkdir -p $BUILD_DIR
+  fi
+
+  cp $SOURCE $BUILD_DIR
+
+  load_env
+  replace_info $BUILD_DIR url \"$ENV_URL\"
+  replace_info $BUILD_DIR debug $ENV_DEBUG
+
+  (cd $BUILD_DIR ; tar -czf ../$PKG_NAME *)
+  echo "...done"
+}
+
+clean()
+{
+  echo "clean $PACKAGE..."
+  if [ -d $BUILD_DIR ]; then
+    echo "delete $BUILD_DIR"
+    rm -rf $BUILD_DIR
+  fi
+
+  for i in $TEMP_FILES
+    do
+      if [ -f $i ]; then
+        echo "delete $i"
+        rm -f $i
+      fi
+    done
+  echo "...done"
+}
+
+if [ ! $1 ] || [ $1 = "build" ]; then
+  if [ $2 ] && [ $3 ]; then
+    ENV_URL=$2
+    ENV_DEBUG=$3
+  fi
+  build
+  exit 0
+elif [ $1 ]; then
+  if [ $1 = "clean" ]; then
+    clean
+    exit 0
+  fi
+fi
+
+exit 0

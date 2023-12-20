@@ -1,0 +1,42 @@
+#!/bin/sh
+
+load_env()
+{
+  if [ -r $ENV_FILE ]; then
+    if [ ! "$ENV_URL" ]; then
+      ENV_URL=$(cat $ENV_FILE | grep URL= | cut -d= -f2)
+    fi
+    if [ ! "$ENV_DEBUG" ]; then
+      ENV_DEBUG=$(cat $ENV_FILE | grep DEBUG= | cut -d= -f2)
+    fi
+  fi
+
+  while [ ! "$ENV_URL" ]; do
+    echo -n "Synox web url (example: http://synox.synology.loc/):" ; read URL
+    URL=$(echo $URL | grep -Eo '(http|https)://[^/"]+')
+    if [ "$URL" != "" ]; then
+       ENV_URL=$URL
+       echo "URL=$ENV_URL" >> $ENV_FILE
+    fi
+  done
+
+  while [ ! "$ENV_DEBUG" ]; do
+    echo -n "Should use debug mode in module? (n/y):" ; read DEBUG
+    if [ "$DEBUG" = "n" ] || [ "$DEBUG" = "y" ]; then
+      if [ "$DEBUG" = "y" ]; then
+        ENV_DEBUG=true
+      else
+        ENV_DEBUG=false
+      fi
+      echo "DEBUG=$ENV_DEBUG" >> $ENV_FILE
+    fi
+  done
+}
+
+replace_info()
+{
+  S_VAR=$(cat "$1/INFO" | grep \"$2\": | sed 's/\,//g')
+  R_VAR="  \"$2\": $3"
+  awk -v srh="$S_VAR" -v rep="$R_VAR" \
+    '{sub(srh,rep); print}' "$1/INFO" > "$1/TEMP" && mv "$1/TEMP" "$1/INFO"
+}
