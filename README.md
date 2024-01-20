@@ -5,6 +5,7 @@ Uses [Synox Web](https://github.com/demorfi/synox-web) as data source.
 
 ## Required
 * DSM >= 6.0
+* [Synox Web](https://github.com/demorfi/synox-web)
 
 ## Includes
 * Audio Station Module
