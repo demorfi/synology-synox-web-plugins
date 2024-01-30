@@ -394,12 +394,13 @@ EOD
                     $download = sprintf(self::URN_FORMAT_ID, $this->url, $payload->id, base64_encode($payload->fetchId));
                     $size     = (float)$payload->size;
                     $datetime = $payload->date;
+                    $hash     = isset($payload->content->hash) ? $payload->content->hash : '';
                     $page     = $payload->pageUrl;
                     $seeds    = (int)$payload->seeds;
                     $peers    = (int)$payload->peers;
                     $category = $payload->category;
 
-                    $plugin->addResult($title, $download, $size, $datetime, $page, '', $seeds, $peers, $category);
+                    $plugin->addResult($title, $download, $size, $datetime, $page, $hash, $seeds, $peers, $category);
                     $total++;
                 }
 

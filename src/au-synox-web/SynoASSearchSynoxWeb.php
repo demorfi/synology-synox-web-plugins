@@ -346,7 +346,7 @@ EOD
                     $artist  = isset($payload->properties->Artist) ? $payload->properties->Artist : '';
                     $title   = sprintf('[%s] - %s', $payload->package, $payload->title);
                     $id      = sprintf(self::URN_FORMAT_ID, $this->url, $payload->id, base64_encode($payload->fetchId));
-                    $partial = isset($payload->content) ? $payload->content : '';
+                    $partial = isset($payload->description) ? $payload->description : '';
 
                     $plugin->addTrackInfoToList($artist, $title, $id, $partial);
                     $total++;
