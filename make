@@ -4,7 +4,7 @@ echo $'##################################################################
 # Synology SynoX Web Make.                                       #
 #                                                                #
 # @author  demorfi <demorfi@gmail.com>                           #
-# @version 1.0                                                   #
+# @version 1.2                                                   #
 # @uses    https://github.com/demorfi/synox-web                  #
 # @source  https://github.com/demorfi/synology-synox-web-plugins #
 # @license http://www.opensource.org/licenses/mit-license.php    #
@@ -14,7 +14,7 @@ echo $'##################################################################
 . ./functions
 
 BUILD_DIR=builds
-VERSION=1.0
+VERSION=1.2
 PACKAGES="au-synox-web bt-synox-web ht-synox-web"
 EXTENSIONS="aum dlm host"
 PATH_DIR=`pwd`

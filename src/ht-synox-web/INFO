@@ -2,7 +2,7 @@
   "name": "ht-synox-web",
   "displayname": "SynoX Web",
   "description": "Download files via SynoX Web",
-  "version": "1.0",
+  "version": "1.2",
   "site": "https://github.com/demorfi/synology-synox-web-plugins",
   "authentication": "yes",
   "module": "SynoFileHostingSynoxWeb.php",
