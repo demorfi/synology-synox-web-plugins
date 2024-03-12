@@ -15,7 +15,7 @@ Uses [Synox Web](https://github.com/demorfi/synox-web) as data source.
 ## HOWTO Use
 1. Build modules to get tar.gz files (.aum, .dlm, .host)
 2. Set synox web url (example: **``http://synox.synology.loc/``**)
-3. Set debug mode
+3. *Optional: Set debug mode and profile id
 4. Login to you Synology with admin privileges
 5. Open Download Station or Audio Station package
 6. Go to Settings area
@@ -24,23 +24,30 @@ Uses [Synox Web](https://github.com/demorfi/synox-web) as data source.
 1. Go to Plugins Text, found on top hand side
 2. Click add and locate **builds/*.aum**
 3. Move plugins in the list to change their priority use
-4. *Optional: Read log file /var/packages/AudioStation/etc/lyricsPlugIn/plugins/au-synox-web/debug.log
+
+Location of the log file when debugging mode is enabled ``/var/packages/AudioStation/etc/lyricsPlugIn/plugins/au-synox-web/debug.log``
 
 ###### For Download Station Search Module
 1. Go to File Search, found on left hand side
 2. Click add and locate required **builds/*.dlm** file
 3. Once done click edit and add your account details
-4. *Optional: To enable debug mode set the password or username equal to **test**. This equal option debug in INFO file
-5. *Optional: To set synox web url set the password or username equal to **synox web url**. This equal option url in INFO file
-6. *Optional: Read log file /var/packages/DownloadStation/etc/download/userplugins/bt-synox-web/debug.log
+
+To enable debug mode or set synox web url can be set fields the "Password" or "Username" to **test** or **synox web url**.
+It's also possible can be set the following JSON string ``{"debug": true, "url": "synox web url", "profile": "profile-id"}`` to fields "Password" or "Username".
+This equal options in INFO file.
+
+Location of the log file when debugging mode is enabled ``/var/packages/DownloadStation/etc/download/userplugins/bt-synox-web/debug.log``
 
 ###### For Download Station Host Module
 1. Go to File Hosting, found on left hand side
 2. Click add and locate required **builds/*.host** file
 3. Once done click edit and add your account details
-4. *Optional: To enable debug mode set the password or username equal to **test**. This equal option debug in INFO file
-5. *Optional: To set synox web url set the password or username equal to **synox web url**. This equal option url in INFO file
-6. *Optional: Read log file /var/packages/DownloadStation/etc/download/userhosts/ht-synox-web/debug.log
+
+To enable debug mode or set synox web url can be set fields the "Password" or "Username" to **test** or **synox web url**.
+It's also possible can be set the following JSON string ``{"debug": true, "url": "synox web url"}`` to fields "Password" or "Username".
+This equal options in INFO file.
+
+Location of the log file when debugging mode is enabled ``/var/packages/DownloadStation/etc/download/userhosts/ht-synox-web/debug.log``
 
 ## Build
 ```shell
@@ -60,7 +67,7 @@ Use the included self-diagnosis utility **tests**
 
 ###### Search files
 ```shell
-./tests --command bt --query "search query string" [--url "http://synox.synology.loc/"] [--debug]
+./tests --command bt --query "search query string" [--url "http://synox.synology.loc/"] [--profile "profile-id"] [--debug]
 ```
 
 ###### Download file
@@ -70,7 +77,7 @@ Use the included self-diagnosis utility **tests**
 
 ###### Search texts
 ```shell
-./tests --command au --query "artist song/title song" [--url "http://synox.synology.loc/"] [--debug]
+./tests --command au --query "artist song/title song" [--url "http://synox.synology.loc/"] [--profile "profile-id"] [--debug]
 ```
 
 ###### Download text
