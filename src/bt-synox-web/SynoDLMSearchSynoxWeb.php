@@ -5,7 +5,7 @@
  * Search files via SynoX Web.
  *
  * @author  demorfi <demorfi@gmail.com>
- * @version 1.2
+ * @version 1.3
  * @php-dsm >=5.6
  * @uses    https://github.com/demorfi/synox-web
  * @source https://github.com/demorfi/synology-synox-web-plugins
