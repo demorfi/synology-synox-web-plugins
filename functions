@@ -17,6 +17,14 @@ load_env()
     fi
   done
 
+  if [ "$ENV_PROFILE" != "None" ]; then
+    echo -n "Profile id:" ; read PROFILE
+    if [ "$PROFILE" != "" ]; then
+      ENV_PROFILE=$PROFILE
+      echo "PROFILE=$ENV_PROFILE" >> $ENV_FILE
+    fi
+  fi
+
   while [ ! "$ENV_DEBUG" ]; do
     echo -n "Should use debug mode in module? (n/y):" ; read DEBUG
     if [ "$DEBUG" = "n" ] || [ "$DEBUG" = "y" ]; then

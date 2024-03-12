@@ -20,6 +20,7 @@ build()
 
   load_env
   replace_info $BUILD_DIR url \"$ENV_URL\"
+  replace_info $BUILD_DIR profile \"$ENV_PROFILE\"
   replace_info $BUILD_DIR debug $ENV_DEBUG
 
   (cd $BUILD_DIR ; tar -czf ../$PKG_NAME *)

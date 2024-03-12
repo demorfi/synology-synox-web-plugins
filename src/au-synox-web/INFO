@@ -8,5 +8,6 @@
   "type": "lyric",
   "class": "SynoASSearchSynoxWeb",
   "url": "",
-  "debug": false
+  "debug": false,
+  "profile": ""
 }

@@ -18,6 +18,7 @@ build()
 
   cp $SOURCE $BUILD_DIR
 
+  ENV_PROFILE="None"
   load_env
   replace_info $BUILD_DIR url \"$ENV_URL\"
   replace_info $BUILD_DIR debug $ENV_DEBUG

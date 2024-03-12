@@ -42,6 +42,11 @@ class SynoASSearchSynoxWeb
     private $url = '';
 
     /**
+     * @var string
+     */
+    private $profile = '';
+
+    /**
      * @var bool
      */
     private $debug = false;
@@ -70,6 +75,10 @@ class SynoASSearchSynoxWeb
             $this->setUrl($json->url);
         }
 
+        if (isset($json->profile)) {
+            $this->setProfile($json->profile);
+        }
+
         $this->logger('Loaded INFO: ' . $content);
     }
 
@@ -85,6 +94,18 @@ class SynoASSearchSynoxWeb
                 $this->url = $url;
                 $this->logger('Set api entrypoint: ' . $url);
             }
+        }
+    }
+
+    /**
+     * @param string $profile
+     * @return void
+     */
+    public function setProfile($profile)
+    {
+        if (!empty($profile) && $this->profile !== $profile) {
+            $this->profile = $profile;
+            $this->logger('Set search profile id: ' . $profile);
         }
     }
 
@@ -282,6 +303,7 @@ EOD
 
         $payload = json_encode([
             'query'   => $query,
+            'profile' => $this->profile,
             'filters' => ['category' => self::$categories]
         ]);
 

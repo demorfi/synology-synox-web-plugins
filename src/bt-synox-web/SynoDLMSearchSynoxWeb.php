@@ -43,6 +43,11 @@ class SynoDLMSearchSynoxWeb
     private $url = '';
 
     /**
+     * @var string
+     */
+    private $profile = '';
+
+    /**
      * Username/Password uses for enable debug mode.
      * For enable debug mode set the username or password field value to "test".
      *
@@ -74,6 +79,10 @@ class SynoDLMSearchSynoxWeb
             $this->setUrl($json->url);
         }
 
+        if (isset($json->profile)) {
+            $this->setProfile($json->profile);
+        }
+
         $this->logger('Loaded INFO: ' . $content);
     }
 
@@ -89,6 +98,18 @@ class SynoDLMSearchSynoxWeb
                 $this->url = $url;
                 $this->logger('Set api entrypoint: ' . $url);
             }
+        }
+    }
+
+    /**
+     * @param string $profile
+     * @return void
+     */
+    public function setProfile($profile)
+    {
+        if (!empty($profile) && $this->profile !== $profile) {
+            $this->profile = $profile;
+            $this->logger('Set search profile id: ' . $profile);
         }
     }
 
@@ -111,14 +132,36 @@ class SynoDLMSearchSynoxWeb
      */
     public function stringAsConfig($string)
     {
-        if (stripos($string, 'test') === 0) {
-            $this->setDebugMode(true);
-            $this->logger('String as config debug: ' . $string);
-        }
+        if (is_string($string) && strlen($string) > 0) {
+            if (stripos($string, 'test') === 0) {
+                $this->setDebugMode(true);
+                $this->logger('String as config debug: ' . $string);
+                return;
+            }
 
-        if (stripos($string, 'http') === 0) {
-            $this->setUrl($string);
-            $this->logger('String as config url: ' . $string);
+            if (stripos($string, 'http') === 0) {
+                $this->setUrl($string);
+                $this->logger('String as config url: ' . $string);
+                return;
+            }
+
+            $array = $this->jsonDecode($string);
+            foreach ($array as $key => $value) {
+                switch (strtolower((string)$key)) {
+                    case 'debug':
+                        $this->setDebugMode((bool)$value);
+                        $this->logger('JSON as config debug: ' . $string);
+                        break;
+                    case 'url':
+                        $this->setUrl((string)$value);
+                        $this->logger('JSON as config url: ' . $string);
+                        break;
+                    case 'profile':
+                        $this->setProfile((string)$value);
+                        $this->logger('JSON as config profile: ' . $string);
+                        break;
+                }
+            }
         }
     }
 
@@ -137,6 +180,19 @@ class SynoDLMSearchSynoxWeb
         }
 
         file_put_contents(self::LOG_FILE, $message . PHP_EOL, FILE_APPEND | LOCK_EX);
+    }
+
+    /**
+     * @param $string
+     * @return array
+     */
+    private function jsonDecode($string)
+    {
+        if (is_string($string) && strlen($string) > 2) {
+            $result = @json_decode($string, true);
+            return json_last_error() === JSON_ERROR_NONE ? (array)$result : [];
+        }
+        return [];
     }
 
     /**
@@ -335,6 +391,7 @@ EOD
 
         $payload = json_encode([
             'query'   => $query,
+            'profile' => $this->profile,
             'filters' => ['category' => self::$categories]
         ]);
 

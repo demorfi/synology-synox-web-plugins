@@ -146,18 +146,18 @@ if (php_sapi_name() !== 'cli') {
     LogInfo('Only works through cli!', true);
 }
 
-$options = getopt('', ['command:', 'query:', 'url:', 'debug::', 'help::']);
+$options = getopt('', ['command:', 'query:', 'url:', 'profile:', 'debug::', 'help::']);
 if (!isset($options['command']) || !isset($options['query']) || isset($options['help'])) {
     LogInfo(
         <<<'EOT'
 Search files: 
-    --command bt --query "search query string" [--url "http://synox.synology.loc/"] [--debug]
+    --command bt --query "search query string" [--url "http://synox.synology.loc/"] [--profile "profile-id"] [--debug]
     
 Download file:
     --command ht --query "search result link" [--url "http://synox.synology.loc/"] [--debug]
 
 Search texts: 
-    --command au --query "artist song/title song" [--url "http://synox.synology.loc/"] [--debug]
+    --command au --query "artist song/title song" [--url "http://synox.synology.loc/"] [--profile "profile-id"] [--debug]
 
 Download text:
     --command hu --query "search result link" [--url "http://synox.synology.loc/"] [--debug]
@@ -211,6 +211,10 @@ if (isset($options['debug'])) {
 
 if (isset($options['url'])) {
     $module->setUrl($options['url']);
+}
+
+if (isset($options['profile']) && in_array($options['command'], ['bt', 'au'])) {
+    $module->setProfile($options['profile']);
 }
 
 /* @var $module SynoInterface */

@@ -144,14 +144,32 @@ class SynoFileHostingSynoxWeb
      */
     public function stringAsConfig($string)
     {
-        if (stripos($string, 'test') === 0) {
-            $this->setDebugMode(true);
-            $this->logger('String as config debug: ' . $string);
-        }
+        if (is_string($string) && strlen($string) > 0) {
+            if (stripos($string, 'test') === 0) {
+                $this->setDebugMode(true);
+                $this->logger('String as config debug: ' . $string);
+                return;
+            }
 
-        if (stripos($string, 'http') === 0) {
-            $this->setUrl($string);
-            $this->logger('String as config url: ' . $string);
+            if (stripos($string, 'http') === 0) {
+                $this->setUrl($string);
+                $this->logger('String as config url: ' . $string);
+                return;
+            }
+
+            $array = $this->jsonDecode($string);
+            foreach ($array as $key => $value) {
+                switch (strtolower((string)$key)) {
+                    case 'debug':
+                        $this->setDebugMode((bool)$value);
+                        $this->logger('JSON as config debug: ' . $string);
+                        break;
+                    case 'url':
+                        $this->setUrl((string)$value);
+                        $this->logger('JSON as config url: ' . $string);
+                        break;
+                }
+            }
         }
     }
 
@@ -170,6 +188,19 @@ class SynoFileHostingSynoxWeb
         }
 
         file_put_contents(self::LOG_FILE, $message . PHP_EOL, FILE_APPEND | LOCK_EX);
+    }
+
+    /**
+     * @param $string
+     * @return array
+     */
+    private function jsonDecode($string)
+    {
+        if (is_string($string) && strlen($string) > 2) {
+            $result = @json_decode($string, true);
+            return json_last_error() === JSON_ERROR_NONE ? (array)$result : [];
+        }
+        return [];
     }
 
     /**

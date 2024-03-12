@@ -9,5 +9,6 @@
   "type": "search",
   "class": "SynoDLMSearchSynoxWeb",
   "url": "",
-  "debug": false
+  "debug": false,
+  "profile": ""
 }
