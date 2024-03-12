@@ -6,9 +6,6 @@ load_env()
     if [ ! "$ENV_URL" ]; then
       ENV_URL=$(cat $ENV_FILE | grep URL= | cut -d= -f2)
     fi
-    if [ ! "$ENV_DEBUG" ]; then
-      ENV_DEBUG=$(cat $ENV_FILE | grep DEBUG= | cut -d= -f2)
-    fi
   fi
 
   while [ ! "$ENV_URL" ]; do

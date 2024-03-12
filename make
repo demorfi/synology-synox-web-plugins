@@ -28,7 +28,6 @@ build()
     mkdir $BUILD_DIR
   fi
 
-  load_env
   for i in $PACKAGES
     do
       cd $PATH_DIR/src/$i
